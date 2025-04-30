@@ -1,17 +1,18 @@
+import 'package:app/models/quotesModel.dart';
 import 'package:flutter/material.dart';
 import '../../../config/theme/light.dart';
 import 'package:app/core/constants/app_constants.dart';
+import 'package:app/core/constants/view_constants.dart';
 
 class DetailView extends StatelessWidget {
-  final String quote;
-  final String author;
-  const DetailView({super.key, required this.quote, required this.author});
+  final QuotesModel quote;
+  const DetailView({super.key, required this.quote});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: LightTheme.backgroundColor,
       appBar: AppBar(
-        title: Text('Detail View'),
+        title: Text(ViewConstants.abbbarTitle),
         backgroundColor: LightTheme.backgroundColor,
       ),
       body: SafeArea(
@@ -25,14 +26,14 @@ class DetailView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Hello!',
+                    ViewConstants.helloText,
                     style: TextStyle(
                       fontSize: AppConstants.font24Px * 2,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
-                    'Here is your quote of the day',
+                    ViewConstants.titleDetailPage,
                     style: TextStyle(
                       fontSize: AppConstants.font12Px * 2,
                       fontWeight: FontWeight.normal,
@@ -59,7 +60,7 @@ class DetailView extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        quote,
+                        quote.quote,
                         style: TextStyle(
                           fontSize: AppConstants.font24Px,
                           fontWeight: FontWeight.bold,
@@ -70,7 +71,7 @@ class DetailView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            author,
+                            quote.author,
                             style: TextStyle(fontSize: AppConstants.font16Px),
                           ),
                           const SizedBox(width: AppConstants.gap16Px),
