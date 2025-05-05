@@ -71,10 +71,8 @@ class HomeScreenBodyState extends State<HomeScreenBody> {
           responses
               .expand((response) => response.data)
               .map(
-                (quote) => QuotesModel(
-                  quote: quote['quote'],
-                  author: quote['author'],
-                ),
+                (quote) =>
+                    QuotesModel(quote: quote['quote'], author: quote['author']),
               )
               .toList();
       setState(() {});
@@ -101,112 +99,109 @@ class HomeScreenBodyState extends State<HomeScreenBody> {
   Widget build(BuildContext context) {
     return SafeArea(
       bottom: false,
-      child: Padding(
-        padding: EdgeInsets.all(AppConstants.gap16Px),
-        child: ListView.builder(
-          itemCount: quotes.length,
-          itemBuilder: (BuildContext context, int index) {
-            return GestureDetector(
-              onTap: () {
-                AppRouter.push(context, quotes[index]);
-              },
-              child: Card(
-                color: LightTheme.cardColor,
+      child: ListView.builder(
+        itemCount: quotes.length,
+        itemBuilder: (BuildContext context, int index) {
+          return GestureDetector(
+            onTap: () {
+              AppRouter.push(context, quotes[index]);
+            },
+            child: Card(
+              color: LightTheme.cardColor,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: AppConstants.gap16Px,
+                  bottom: AppConstants.gap16Px,
+                  left: AppConstants.gap16Px,
+                  right: AppConstants.gap16Px,
+                ),
                 child: Padding(
                   padding: const EdgeInsets.only(
-                    top: AppConstants.gap16Px,
-                    bottom: AppConstants.gap16Px,
-                    left: AppConstants.gap16Px,
-                    right: AppConstants.gap16Px,
+                    left: AppConstants.gap12Px,
+                    right: AppConstants.gap12Px,
+                    top: AppConstants.gap24Px,
+                    bottom: AppConstants.gap24Px,
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      left: AppConstants.gap12Px,
-                      right: AppConstants.gap12Px,
-                      top: AppConstants.gap24Px,
-                      bottom: AppConstants.gap24Px,
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.format_quote,
-                              size: 32,
-                              color: LightTheme.textColorCard,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.format_quote,
+                            size: 32,
+                            color: LightTheme.textColorCard,
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: AppConstants.gap24Px),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.7,
+                            child: Text(
+                              quotes[index].quote,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: LightTheme.textColorCard,
+                                fontSize: AppConstants.font24Px,
+                              ),
                             ),
-                          ],
-                        ),
-                        SizedBox(height: AppConstants.gap24Px),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.7,
+                          ),
+                          Icon(
+                            Icons.more_rounded,
+                            size: 24,
+                            color: LightTheme.textColorCard,
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: AppConstants.gap16Px),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [Text('5 min . 100 views')],
+                      ),
+                      SizedBox(height: AppConstants.gap16Px),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: LightTheme.textColorCardAuthor,
+                              borderRadius: BorderRadius.circular(
+                                AppConstants.gap12Px,
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                left: AppConstants.gap16Px,
+                                right: AppConstants.gap16Px,
+                                top: AppConstants.gap8Px,
+                                bottom: AppConstants.gap8Px,
+                              ),
                               child: Text(
-                                quotes[index].quote,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
+                                quotes[index].author,
                                 style: TextStyle(
-                                  color: LightTheme.textColorCard,
-                                  fontSize: AppConstants.font24Px,
+                                  color: LightTheme.cardColor,
+                                  fontSize: AppConstants.font16Px,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 1.5,
                                 ),
                               ),
                             ),
-                            Icon(
-                              Icons.more_rounded,
-                              size: 24,
-                              color: LightTheme.textColorCard,
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: AppConstants.gap16Px),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [Text('5 min . 100 views')],
-                        ),
-                        SizedBox(height: AppConstants.gap16Px),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                color: LightTheme.textColorCardAuthor,
-                                borderRadius: BorderRadius.circular(
-                                  AppConstants.gap12Px,
-                                ),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                  left: AppConstants.gap16Px,
-                                  right: AppConstants.gap16Px,
-                                  top: AppConstants.gap8Px,
-                                  bottom: AppConstants.gap8Px,
-                                ),
-                                child: Text(
-                                  quotes[index].author,
-                                  style: TextStyle(
-                                    color: LightTheme.cardColor,
-                                    fontSize: AppConstants.font16Px,
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: 1.5,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }
