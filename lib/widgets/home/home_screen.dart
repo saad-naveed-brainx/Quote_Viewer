@@ -3,7 +3,7 @@ import '../../../core/constants/app_constants.dart';
 import '../../../core/constants/view_constants.dart';
 import '../../../config/theme/light.dart';
 import 'package:dio/dio.dart';
-import '../../../models/quotesModel.dart';
+import '../../models/quotes_model.dart';
 import '../../../config/approuter.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -67,18 +67,17 @@ class HomeScreenBodyState extends State<HomeScreenBody> {
         getQuotes(),
       ]);
 
-      setState(() {
-        quotes =
-            responses
-                .expand((response) => response.data)
-                .map(
-                  (quote) => QuotesModel(
-                    quote: quote['quote'],
-                    author: quote['author'],
-                  ),
-                )
-                .toList();
-      });
+      quotes =
+          responses
+              .expand((response) => response.data)
+              .map(
+                (quote) => QuotesModel(
+                  quote: quote['quote'],
+                  author: quote['author'],
+                ),
+              )
+              .toList();
+      setState(() {});
     } catch (e) {
       print(e);
     }
@@ -109,7 +108,7 @@ class HomeScreenBodyState extends State<HomeScreenBody> {
           itemBuilder: (BuildContext context, int index) {
             return GestureDetector(
               onTap: () {
-                AppRouter.navigateToDetailView(context, quotes[index]);
+                AppRouter.push(context, quotes[index]);
               },
               child: Card(
                 color: LightTheme.cardColor,

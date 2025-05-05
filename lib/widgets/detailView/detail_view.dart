@@ -1,4 +1,4 @@
-import 'package:app/models/quotesModel.dart';
+import 'package:app/models/quotes_model.dart';
 import 'package:flutter/material.dart';
 import '../../../config/theme/light.dart';
 import 'package:app/core/constants/app_constants.dart';

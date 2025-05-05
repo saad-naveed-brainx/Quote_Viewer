@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../models/quotesModel.dart';
+import '../models/quotes_model.dart';
 import '../widgets/detailView/detail_view.dart';
 
 class AppRouter {
-  static void navigateToDetailView(BuildContext context, QuotesModel quote) {
+  static void push(BuildContext context, QuotesModel quote) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => DetailView(quote: quote)),
