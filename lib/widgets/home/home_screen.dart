@@ -3,6 +3,8 @@ import '../../../core/constants/app_constants.dart';
 import '../../../core/constants/view_constants.dart';
 import '../../../config/theme/light.dart';
 import 'package:dio/dio.dart';
+import '../../models/quotes_model.dart';
+import '../../../config/approuter.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -40,7 +42,7 @@ class HomeScreenBody extends StatefulWidget {
 }
 
 class HomeScreenBodyState extends State<HomeScreenBody> {
-  List<dynamic> quotes = [];
+  List<QuotesModel> quotes = [];
 
   @override
   void initState() {
@@ -65,10 +67,15 @@ class HomeScreenBodyState extends State<HomeScreenBody> {
         getQuotes(),
       ]);
 
-      setState(() {
-        quotes = responses.expand((response) => response.data).toList();
-        print(quotes);
-      });
+      quotes =
+          responses
+              .expand((response) => response.data)
+              .map(
+                (quote) =>
+                    QuotesModel(quote: quote['quote'], author: quote['author']),
+              )
+              .toList();
+      setState(() {});
     } catch (e) {
       print(e);
     }
@@ -92,12 +99,14 @@ class HomeScreenBodyState extends State<HomeScreenBody> {
   Widget build(BuildContext context) {
     return SafeArea(
       bottom: false,
-      child: Padding(
-        padding: EdgeInsets.all(AppConstants.gap16Px),
-        child: ListView.builder(
-          itemCount: quotes.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Card(
+      child: ListView.builder(
+        itemCount: quotes.length,
+        itemBuilder: (BuildContext context, int index) {
+          return GestureDetector(
+            onTap: () {
+              AppRouter.push(context, quotes[index]);
+            },
+            child: Card(
               color: LightTheme.cardColor,
               child: Padding(
                 padding: const EdgeInsets.only(
@@ -134,7 +143,7 @@ class HomeScreenBodyState extends State<HomeScreenBody> {
                           Container(
                             width: MediaQuery.of(context).size.width * 0.7,
                             child: Text(
-                              quotes[index]['quote'],
+                              quotes[index].quote,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -174,7 +183,7 @@ class HomeScreenBodyState extends State<HomeScreenBody> {
                                 bottom: AppConstants.gap8Px,
                               ),
                               child: Text(
-                                quotes[index]['author'],
+                                quotes[index].author,
                                 style: TextStyle(
                                   color: LightTheme.cardColor,
                                   fontSize: AppConstants.font16Px,
@@ -190,9 +199,9 @@ class HomeScreenBodyState extends State<HomeScreenBody> {
                   ),
                 ),
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }
